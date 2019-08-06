@@ -1,4 +1,4 @@
-from turtle import *
+### Our first Python code
 
 CM_PER_IN = 2.54
 
@@ -15,6 +15,10 @@ def f_to_c(f: float) -> float:
 
 assert f_to_c(212) == 100
 assert f_to_c(-40) == -40
+
+### How to get access to turtle commands:
+
+# from turtle import *
 
 ### Turtle commands we know:
 
