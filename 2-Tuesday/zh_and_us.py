@@ -60,7 +60,7 @@ def usa(width: float,
             x = star_x0 + col * star_dx
             y = star_y0 - row * star_dy
             jump_to(x, y)
-            star(star_size, fill = 'yellow')
+            star(star_size, fill = 'white')
     pendown()
     jump_to(old_x, old_y)
     rectangle(width, height)
