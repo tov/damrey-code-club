@@ -39,6 +39,7 @@ def usa(width: float,
     star_dy   = 0.9 * canton_ht / rows
     star_y0   = old_y - 0.7 * star_dy
     star_size = star_dx / 5
+    margin_x  = star_dx / 5
     penup()
     for row in range(stripes):
         if row % 2 == 0:
@@ -51,10 +52,10 @@ def usa(width: float,
     for row in range(rows):
         if row % 2 == 0:
             row_size = columns
-            star_x0 = old_x + 0.2 * star_dx
+            star_x0 = old_x + margin_x
         else:
             row_size = columns - 1
-            star_x0 = old_x + 0.7 * star_dx
+            star_x0 = old_x + margin_x + star_dx / 2
         for col in range(row_size):
             x = star_x0 + col * star_dx
             y = star_y0 - row * star_dy
