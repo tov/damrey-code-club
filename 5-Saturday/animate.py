@@ -36,19 +36,19 @@ def draw_fish(f: Fish):
     end_fill()
     jump_to(x0, y0)
     setheading(h0)
-    
-    
+
+
 def feed_fish(f: Fish):
     """Feeds the fish so it grows."""
     f.size *= 1.1
-    
+
 
 @record
 class Posn:
     """Represents the 2-D point (x, y)."""
     x: float
     y: float
-    
+
 
 @record
 class SwimmingFish:
@@ -56,8 +56,8 @@ class SwimmingFish:
     fish: Fish
     posn: Posn
     dx:   float
-    
-    
+
+
 # Some examples of swimming fish:
 EX_SWIMMING1 = SwimmingFish(EX_FISH1, Posn(200, -100), -10)
 EX_SWIMMING2 = SwimmingFish(EX_FISH2, Posn(-200, 100), 5)
@@ -71,32 +71,32 @@ def draw_swimming_fish(f: SwimmingFish):
     else:
         seth(0)
     draw_fish(f.fish)
-    
-    
+
+
 def left_edge(f: SwimmingFish) -> float:
     """Returns the x coordinate of the left edge of a swimming fish."""
     if f.dx > 0:
         return f.posn.x
     else:
         return f.posn.x - f.fish.size
-    
+
 
 def right_edge(f: SwimmingFish) -> float:
     """Returns the x coordinate of the right edge of a swimming fish."""
     if f.dx > 0:
         return f.posn.x + f.fish.size
     else:
-        return f.posn.x    
-    
-    
+        return f.posn.x
+
+
 def move_swimming_fish(f: SwimmingFish, width: int):
     """Moves the fish to simulate swimming."""
     f.posn.x += f.dx
     if (right_edge(f) > width / 2 and f.dx > 0) or \
        (left_edge(f) < -width / 2 and f.dx < 0):
         f.dx = -f.dx
-      
-      
+
+
 def is_posn_above_fish(p: Posn, f: SwimmingFish):
     """Determines whether `p` is directly above `f`."""
     return p.y > f.posn.y and left_edge(f) <= p.x <= right_edge(f)
@@ -116,7 +116,7 @@ class Node:
     """One node in a linked list of `SwimmingFish`s."""
     first: SwimmingFish
     rest:  FishList
-    
+
 
 # Some examples of lists of fish:
 EX_FISHES0 = None
@@ -135,15 +135,15 @@ def draw_fish_list(fishes: FishList):
     if fishes is not None:
         draw_swimming_fish(fishes.first)
         draw_fish_list(fishes.rest)
-        
- 
+
+
 def move_fish_list(fishes: FishList, width: int):
     """Moves all the fish in the list to simulate swimming."""
     if fishes is not None:
         move_swimming_fish(fishes.first, width)
         move_fish_list(fishes.rest, width)
-        
-  
+
+
 def try_feed_all_fish(p: Posn, fishes: FishList):
     """Feeds every fish that `p` is above."""
     if fishes is not None:
@@ -178,25 +178,25 @@ def draw_aquarium(aq: Aquarium):
         right(90)
     end_fill()
     draw_fish_list(aq.fishes)
-    
-    
+
+
 def move_aquarium(aq: Aquarium):
     """Moves all the fish in the aquarium."""
     move_fish_list(aq.fishes, aq.width)
-    
-    
+
+
 def animate(aq: Aquarium):
     """Animates the given aquarium."""
     def handle_click(x: float, y: float):
         try_feed_all_fish(Posn(x, y), aq.fishes)
-        
+
     def handle_tick():
         move_aquarium(aq)
         draw_aquarium(aq)
         update()
         ontimer(handle_tick, 10)
-        
-    sc = Screen()        
+
+    sc = Screen()
     sc.setup(aq.width, aq.height)
     sc.tracer(0)
     sc.onclick(handle_click)
